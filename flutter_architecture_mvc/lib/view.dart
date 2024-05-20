@@ -1,31 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_architecture_mvc/controller.dart';
+import 'package:flutter_architecture_mvc/view_model.dart';
 import 'package:flutter_architecture_mvc/model.dart';
 
-// TODO: MVC 패턴을 적용하여 카운터 앱이 동작하도록 변경하기
+// TODO: MVVM 패턴을 적용하여 카운터 앱이 동작하도록 변경하기
 // - 단, View 내에 변수는 없어야 한다. (ex. counter)
 
-class CounterView extends StatefulWidget {
-  final CounterController counterController;
-  final CounterModeController counterModeController;
+class CounterView extends StatelessWidget {
+  final CounterViewModel counterViewModel;
+  final CounterModeViewModel counterModeViewModel;
 
   const CounterView(
       {super.key,
-      required this.counterController,
-      required this.counterModeController});
+      required this.counterViewModel,
+      required this.counterModeViewModel});
 
-  @override
-  State<CounterView> createState() => _CounterViewState();
-}
-
-class _CounterViewState extends State<CounterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('MVC'),
+        title: const Text('MVVM'),
         actions: [
           IconButton(
             onPressed: onChangeMode,
@@ -40,35 +35,36 @@ class _CounterViewState extends State<CounterView> {
             const Text(
               'You have pushed the button this many times:',
             ),
-            Text(
-              widget.counterController.counter.toString(),
-              style: Theme.of(context).textTheme.headlineMedium,
-            )
+            ValueListenableBuilder(
+              valueListenable: counterViewModel.counter,
+              builder: (context, counter, child) => Text(
+                counterViewModel.counter.value.toString(),
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: execute,
-        child: Icon(widget.counterModeController.counterMode.icon),
-      ),
+          onPressed: execute,
+          child: ValueListenableBuilder<CounterMode>(
+            valueListenable: counterModeViewModel.counterMode,
+            builder: (context, counterMode, child) => Icon(counterMode.icon),
+          )),
     );
   }
 
   void onChangeMode() {
-    setState(() {
-      widget.counterModeController.toggleMode();
-    });
+    counterModeViewModel.toggleMode();
   }
 
   void execute() {
-    setState(() {
-      switch (widget.counterModeController.counterMode) {
-        case CounterMode.plus:
-          widget.counterController.increment();
-        case CounterMode.minus:
-          widget.counterController.decrement();
-      }
-    });
+    switch (counterModeViewModel.counterMode.value) {
+      case CounterMode.plus:
+        counterViewModel.increment();
+      case CounterMode.minus:
+        counterViewModel.decrement();
+    }
   }
 }
 
