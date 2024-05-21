@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_architecture_mvc/view_model.dart';
-import 'package:flutter_architecture_mvc/model.dart';
+import 'package:flutter_architecture_mvc/domain/model/counter_mode.dart';
+import 'package:flutter_architecture_mvc/presentation/view_model/counter.dart';
+import 'package:flutter_architecture_mvc/presentation/view_model/counter_mode.dart';
 
-// TODO: MVVM 패턴을 적용하여 카운터 앱이 동작하도록 변경하기
+// TODO: Clean Architecture 패턴을 적용하여 카운터 앱이 동작하도록 변경하기
 // - 단, View 내에 변수는 없어야 한다. (ex. counter)
 
 class CounterView extends StatelessWidget {

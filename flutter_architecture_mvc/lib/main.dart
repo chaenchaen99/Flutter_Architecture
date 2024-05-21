@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_architecture_mvc/view_model.dart';
-import 'package:flutter_architecture_mvc/model.dart';
-
-import 'view.dart';
+import 'package:flutter_architecture_mvc/domain/model/counter.dart';
+import 'package:flutter_architecture_mvc/domain/model/counter_mode.dart';
+import 'package:flutter_architecture_mvc/presentation/view_model/counter.dart';
+import 'package:flutter_architecture_mvc/presentation/view_model/counter_mode.dart';
+import 'package:flutter_architecture_mvc/ui/view/counter.dart';
 
 void main() {
   runApp(const CounterApp());
